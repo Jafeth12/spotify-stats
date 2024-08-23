@@ -1,10 +1,19 @@
 ---
+import { getSession } from 'auth-astro/server';
+
+let session = await getSession(Astro.request);
+if (!session) return Astro.redirect("/login");
+
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Nav/Navbar.astro'
+import { SignOut } from 'auth-astro/components';
 ---
 
 <Layout title="//">
-    <p class="text-white">Main page</p>
+    <div class="text-white">
+        <p>Main page</p>
+        <SignOut class="btn-primary">Sign out</SignOut>
+    </div>
 </Layout>
 
 <style>
