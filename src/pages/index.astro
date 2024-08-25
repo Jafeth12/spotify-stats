@@ -1,20 +1,26 @@
 ---
 import { getSession } from 'auth-astro/server';
+import { getProfile } from '../spotify/spotifyApi.ts';
 
 let session = await getSession(Astro.request);
 if (!session) return Astro.redirect("/login");
 
 import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/Nav/Navbar.astro'
+import Navbar from '../components/nav/Navbar.astro';
+import Profile from '../components/profile/Profile.astro';
 import { SignOut } from 'auth-astro/components';
 ---
 
 <Layout title="//">
-    <div class="text-white">
-        <p>Main page</p>
-        <SignOut class="btn-primary">Sign out</SignOut>
+    <Navbar />
+
+    <div class="min-h-screen text-white bg-gradient-to-t from-black to-emerald-800 from-80%">
+        <Profile />
     </div>
 </Layout>
 
-<style>
-</style>
+<script>
+    
+
+
+</script>

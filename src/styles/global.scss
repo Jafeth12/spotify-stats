@@ -1,8 +1,25 @@
 .btn-primary {
-  @apply border-2 border-emerald-800 rounded-full p-3;
+  @apply border-4 border-emerald-800 rounded-full p-3;
 
   &:hover {
     @apply border-emerald-300;
   }
 
+}
+
+.btn-confirm {
+  @apply rounded-full p-3 bg-emerald-700 text-white;
+
+  &:hover {
+    @apply bg-emerald-800;
+  }
+
+}
+
+.nav-link {
+  @apply text-white text-lg;
+
+  &:hover {
+    @apply text-emerald-300;
+  }
 }

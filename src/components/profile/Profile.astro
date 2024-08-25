@@ -1,0 +1,14 @@
+---
+import { getSession } from 'auth-astro/server';
+import { getProfile } from '../../spotify/spotifyApi.ts';
+
+let session = await getSession(Astro.request);
+if (!session) return Astro.redirect("/login");
+
+console.log(session);
+
+// let profile = await getProfile(session.accessToken);
+// console.log(profile);
+
+---
+
