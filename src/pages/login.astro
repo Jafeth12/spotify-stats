@@ -6,8 +6,29 @@ if (session) return Astro.redirect("/");
 
 import Layout from '../layouts/Layout.astro';
 import LoginForm from '../components/auth/LoginForm.astro';
+import { Image } from 'astro:assets';
+import { SignIn } from 'auth-astro/components';
 ---
 
 <Layout title="Login">
-    <LoginForm />
+    <div class="h-screen flex justify-center items-center text-white">
+        <div class="mb-10 border-4 rounded-md border-emerald-800 p-20 xl:w-1/4">
+            <div class="text-center">
+                <h1 class="text-4xl">Spotify stats</h1>
+            </div>
+
+            <hr class="mt-5 mb-10" />
+
+            <div>
+                <div class="flex justify-center">
+                    <SignIn provider="spotify" class="btn-primary">
+                        <div class="flex justify-between gap-3">
+                            <Image src="/spotify.png" alt="spotify" width=24 height=16 />
+                            <p>Login with Spotify</p>
+                        </div>
+                    </SignIn>
+                </div>
+            </div>
+        </div>
+    </div>
 </Layout>

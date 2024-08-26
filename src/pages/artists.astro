@@ -1,18 +1,30 @@
 ---
 import { getSession } from 'auth-astro/server';
 import { getTopItems } from '../spotify/api.ts';
-import { SpotifyItemType } from '../spotify/interfaces.ts';
+import { SpotifyItemType, SpotifyArtist } from '../spotify/interfaces.ts';
 
 let session = await getSession(Astro.request);
 if (!session) return Astro.redirect("/login");
 
-console.log(await getTopItems(session.accessToken, SpotifyItemType.artists));
+console.log(session);
+const artists = await getTopItems(session.accessToken, SpotifyItemType.artists);
+
 
 import Layout from '../layouts/Layout.astro';
+import Artist from '../components/cards/Artist.astro';
 ---
 
 <Layout title="//">
-    <p>Top artists</p>
+    <div class="flex justify-center p-10">
+        <h1 class="text-4xl font-bold">Top Artists: <span class="text-gray-300">{session.user.name}</span>
+    </div>
+    <div class="grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 xl:gap-6 xl:gap-y-12 md:gap-12 gap-y-12 px-20 py-10">
+        {
+            artists.items.map((artist: SpotifyArtist, index: number) => (
+                <Artist data={artist} rank={index+1} />
+            ))
+        }
+    </div>
 </Layout>
 
 <script>

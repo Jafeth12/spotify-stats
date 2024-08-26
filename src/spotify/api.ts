@@ -29,7 +29,5 @@ export const getProfile = async (accessToken: string) => {
 export const getTopItems = async (accessToken: string, type: interfaces.SpotifyItemType) => {
     let endpoint = (type == interfaces.SpotifyItemType.artists) ? '/me/top/artists' : '/me/top/tracks';
 
-    // console.log(endpoint);
-
     return await call(endpoint, accessToken) as interfaces.SpotifyTopItems;
 }

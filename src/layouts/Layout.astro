@@ -5,6 +5,10 @@ interface Props {
 
 const { title } = Astro.props;
 
+import { getSession } from 'auth-astro/server';
+
+const session = await getSession(Astro.request);
+
 import "../styles/global.scss";
 import Navbar from '../components/nav/Navbar.astro';
 ---
@@ -20,7 +24,7 @@ import Navbar from '../components/nav/Navbar.astro';
 		<title>{title}</title>
 	</head>
 	<body>
-        <Navbar />
+        { session ? <Navbar /> : <span />}
 
         <div class="min-h-screen text-white bg-gradient-to-t from-black to-emerald-800 from-80%">
 		    <slot />
