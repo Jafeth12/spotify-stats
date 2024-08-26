@@ -7,7 +7,7 @@ export default defineConfig({
 		Spotify({
 			clientId: import.meta.env.SPOTIFY_CLIENT_ID,
 			clientSecret: import.meta.env.SPOTIFY_CLIENT_SECRET,
-            authorization: { params: { scope: "playlist-read-private user-top-read user-read-recently-played user-read-email user-read-private" } },
+            authorization: { params: { scope: "user-top-read user-read-recently-played user-read-private" } },
 		}),
 	],
     callbacks: {

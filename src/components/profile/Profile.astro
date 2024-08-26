@@ -1,14 +1,45 @@
 ---
+import '../../styles/global.scss';
+
+import { Image } from 'astro:assets';
 import { getSession } from 'auth-astro/server';
-import { getProfile } from '../../spotify/spotifyApi.ts';
+import { getProfile } from '../../spotify/api.ts';
+import type { SpotifyProfile } from '@auth/core/providers/spotify';
+
+import defaultProfilePicture from '../../../public/default_profile.jpeg';
 
 let session = await getSession(Astro.request);
 if (!session) return Astro.redirect("/login");
 
-console.log(session);
+let profile = await getProfile(session.accessToken);
+console.log(profile);
 
-// let profile = await getProfile(session.accessToken);
-// console.log(profile);
+const hasImage = profile.images && profile.images.length > 0;
 
 ---
+
+
+<div class="flex justify-center p-10">
+    <div class="flex flex-col items-center">
+        <div class="">
+            <h1 class="text-4xl font-bold">Spotify stats</h1>
+        </div>
+
+        <div class="mt-10">
+            <div class="flex justify-center">
+                {hasImage ? (
+            <Image class="rounded-full" src={profile.images[1].url} alt="spotify" width=200 height=200 />
+                ) : (
+                <Image class="rounded-full" src={defaultProfilePicture} alt="spotify" width=200 height=200 />
+                )}
+            </div>
+
+        <h1 class="text-2xl font-bold mt-4">{ profile.display_name }</h1>
+        <p class="text-gray-500">{ profile.email }</p>
+
+        </div>
+    </div>
+
+</div>
+
 

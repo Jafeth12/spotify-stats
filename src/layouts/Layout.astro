@@ -6,6 +6,7 @@ interface Props {
 const { title } = Astro.props;
 
 import "../styles/global.scss";
+import Navbar from '../components/nav/Navbar.astro';
 ---
 
 <!doctype html>
@@ -19,7 +20,11 @@ import "../styles/global.scss";
 		<title>{title}</title>
 	</head>
 	<body>
-		<slot />
+        <Navbar />
+
+        <div class="min-h-screen text-white bg-gradient-to-t from-black to-emerald-800 from-80%">
+		    <slot />
+        </div>
 	</body>
 </html>
 <style is:global>

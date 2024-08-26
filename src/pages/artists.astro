@@ -1,20 +1,19 @@
 ---
 import { getSession } from 'auth-astro/server';
-import { getProfile } from '../spotify/api.ts';
+import { getTopItems } from '../spotify/api.ts';
+import { SpotifyItemType } from '../spotify/interfaces.ts';
 
 let session = await getSession(Astro.request);
 if (!session) return Astro.redirect("/login");
 
+console.log(await getTopItems(session.accessToken, SpotifyItemType.artists));
+
 import Layout from '../layouts/Layout.astro';
-import Profile from '../components/profile/Profile.astro';
 ---
 
 <Layout title="//">
-    <Profile />
+    <p>Top artists</p>
 </Layout>
 
 <script>
-    
-
-
 </script>

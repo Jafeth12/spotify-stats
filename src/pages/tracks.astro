@@ -1,13 +1,16 @@
 ---
 import { getSession } from 'auth-astro/server';
+import { getTopItems } from '../spotify/api.ts';
 
 let session = await getSession(Astro.request);
-if (session) return Astro.redirect("/");
+if (!session) return Astro.redirect("/login");
 
 import Layout from '../layouts/Layout.astro';
-import LoginForm from '../components/auth/LoginForm.astro';
 ---
 
-<Layout title="Login">
-    <LoginForm />
+<Layout title="//">
+    <p>Top tracks</p>
 </Layout>
+
+<script>
+</script>
