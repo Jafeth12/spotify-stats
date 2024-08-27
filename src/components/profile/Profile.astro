@@ -4,18 +4,15 @@ import '../../styles/global.scss';
 import { Image } from 'astro:assets';
 import { getSession } from 'auth-astro/server';
 import { getProfile } from '../../spotify/api.ts';
-import type { SpotifyProfile } from '@auth/core/providers/spotify';
 
 import defaultProfilePicture from '../../../public/default_profile.jpeg';
 
-let session = await getSession(Astro.request);
+let session = await getSession(Astro.request) as any;
 if (!session) return Astro.redirect("/login");
 
 let profile = await getProfile(session.accessToken);
-console.log(profile);
 
 const hasImage = profile.images && profile.images.length > 0;
-
 ---
 
 

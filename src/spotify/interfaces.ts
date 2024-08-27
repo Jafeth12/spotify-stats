@@ -85,7 +85,7 @@ export enum SpotifyItemType {
     tracks
 };
 
-type SpotifyItem = SpotifyArtist | SpotifyTrack;
+export type SpotifyItem = SpotifyArtist | SpotifyTrack;
 
 export interface SpotifyTopItems {
     href: string;

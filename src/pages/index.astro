@@ -1,6 +1,5 @@
 ---
 import { getSession } from 'auth-astro/server';
-import { getProfile } from '../spotify/api.ts';
 
 let session = await getSession(Astro.request);
 if (!session) return Astro.redirect("/login");

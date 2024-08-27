@@ -1,5 +1,5 @@
 ---
-import SpotifyArtist from '../../spotify/interfaces.ts';
+import type { SpotifyArtist } from '../../spotify/interfaces.ts';
 
 interface Props {
     data: SpotifyArtist;
@@ -13,7 +13,7 @@ const maxGenres = 3;
 import { Image } from 'astro:assets';
 ---
 
-<div class="p-5 shadow-xl">
+<div class="p-5 shadow-2xl">
     <div class="w-full flex justify-center">
         <a href={data.external_urls.spotify} target="_blank">
             <Image class="rounded-full max-h-96 transition ease-in hover:grayscale" src={data.images[0].url} alt={data.name} width=400 height=400 />
@@ -21,7 +21,7 @@ import { Image } from 'astro:assets';
 
     </div>
     <div class="mt-3">
-        <a href={data.external_urls.spotify}>
+        <a href={data.external_urls.spotify} target="_blank">
             <p class="text-xl text-center transition ease-in hover:text-gray-400"> <span class="text-xl text-gray-500">{rank}. </span>{data.name}</p>
         </a>
 

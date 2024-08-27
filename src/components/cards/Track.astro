@@ -1,0 +1,99 @@
+---
+import type { SpotifyTrack, SpotifySimplifiedArtist } from '../../spotify/interfaces.ts';
+
+interface Props {
+    data: SpotifyTrack;
+    rank: number;
+}
+
+const { data, rank } = Astro.props;
+
+import { Image } from 'astro:assets';
+---
+
+<div class="p-5 shadow-xl">
+    <div class="w-full flex justify-center">
+        <a href={data.external_urls.spotify} target="_blank">
+            <Image class="max-h-96 transition ease-in hover:grayscale" src={data.album.images[0].url} alt={data.name} width=400 height=400 />
+        </a>
+
+    </div>
+    <div class="mt-3">
+        <a href={data.external_urls.spotify} target="_blank" >  
+            <p class="track-title text-xl text-center transition ease-in hover:text-gray-400" title={data.name}> <span class="text-xl text-gray-500">{rank}.</span> {data.name}</p>
+        </a>
+
+        <div class="text-md text-gray-300 mt-2 flex justify-around">
+            {
+                data.album.artists.map((artist: SpotifySimplifiedArtist) => (
+                    <a href={artist.external_urls.spotify} >
+                        <p class="text-md transition ease-in hover:text-gray-500">{artist.name}</p>
+                    </a>
+                ))
+            }
+        </div>
+
+        <div class="mt-2 text-center">
+            <a href={data.album.external_urls.spotify} target="_blank">
+                <p class="text-sm text-gray-300 font-bold">[ {data.album.name} ]</p>
+            </a>
+        </div>
+    </div>
+
+    <audio id={data.name} src={data.preview_url} />
+</div>
+
+<script>
+    function audioVolumeIn(q: HTMLAudioElement){
+       if(q.volume){
+          var InT = 0;
+          var setVolume = 0.3; // Target volume level for new song
+          var speed = 0.05; // Rate of increase
+          q.volume = InT;
+          var eAudio = setInterval(function(){
+              InT += speed;
+              let newVolume = Number(InT.toFixed(1));
+                q.volume = newVolume;
+              if(newVolume >= setVolume){
+                 clearInterval(eAudio);
+                 //alert('clearInterval eAudio'+ InT.toFixed(1));
+              };
+          },50);
+       };
+   };
+
+    function PlaySound(id: string) {
+        let track = document.getElementById(id) as HTMLAudioElement;
+        if (!track) return null;
+
+        track.play();
+        audioVolumeIn(track);
+    }
+
+    function StopSound(id: string) {
+        let track = document.getElementById(id) as HTMLAudioElement;
+        if (!track) return null;
+
+        track.pause();
+        track.currentTime = 0;
+    }
+
+    const titles = document.querySelectorAll('p.track-title');
+
+    titles.forEach((title) => {
+        title.addEventListener('mouseover', () => {
+            let id = title.getAttribute('title');
+            if (!id) return null;
+
+            PlaySound(id);
+        })
+
+        title.addEventListener('mouseout', () => {
+            let id = title.getAttribute('title');
+            if (!id) return null;
+
+            StopSound(id);
+        })
+    })
+
+</script>

@@ -5,7 +5,6 @@ let session = await getSession(Astro.request);
 if (session) return Astro.redirect("/");
 
 import Layout from '../layouts/Layout.astro';
-import LoginForm from '../components/auth/LoginForm.astro';
 import { Image } from 'astro:assets';
 import { SignIn } from 'auth-astro/components';
 ---
