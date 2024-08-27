@@ -26,7 +26,7 @@ import Navbar from '../components/nav/Navbar.astro';
 	<body>
         { session ? <Navbar /> : <span />}
 
-        <div class="min-h-screen text-white bg-gradient-to-t from-black to-emerald-800 from-80%">
+        <div class="min-h-screen text-white bg-gradient-to-t from-zinc-900 to-emerald-800 from-80%">
 		    <slot />
         </div>
 	</body>
@@ -34,7 +34,6 @@ import Navbar from '../components/nav/Navbar.astro';
 <style is:global>
 	html {
 		font-family: system-ui, sans-serif;
-		background: black;
 	}
 
 	code {
