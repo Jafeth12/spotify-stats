@@ -6,6 +6,28 @@ export enum SpotifyTimeRange {
     short_term = 'short_term'
 }
 
+export enum SpotifyRepeatState {
+    off = 'off',
+    track = 'track',
+    context = 'context'
+};
+
+export enum SpotifyPlayingType {
+    track = 'track',
+    episode = 'episode',
+    unknown = 'unknown'
+};
+
+export interface SpotifyDevice {
+    id: string;
+    is_active: boolean;
+    is_private_session: boolean;
+    is_restricted: boolean;
+    name: string;
+    volume_percent: string;
+    supports_volume: string;
+};
+
 export interface SpotifyRecentlyPlayedParams {
     limit: number;
     after: number;
@@ -75,6 +97,7 @@ export interface SpotifyTrack {
     type: string;
     album: SpotifyAlbum;
     images: SpotifyImage[];
+    artists: SpotifySimplifiedArtist[];
     available_markets: string[];
     disc_number: number;
     duration_ms: number;
@@ -130,4 +153,14 @@ export interface SpotifyRecentlyPlayed {
         after: string;
         before: string;
     };
+};
+
+export interface SpotifyCurrentlyPlaying {
+    device: SpotifyDevice;
+    repeat_state: SpotifyRepeatState;
+    timestamp: number;
+    progress_ms: number;
+    is_playing: boolean;
+    item: SpotifyTrack;
+    currently_playing_type: SpotifyPlayingType;
 };

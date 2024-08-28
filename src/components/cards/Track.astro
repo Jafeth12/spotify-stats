@@ -18,7 +18,7 @@ const getDateString = (playedAt: string) => {
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
 
-    let hhmm = '[' + date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0') + ']';
+    let hhmm = '[' + date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0') + 'h]';
 
     if (seconds < 60) {
         if (seconds < 10) return `just now ` + hhmm;

@@ -45,3 +45,7 @@ export const getRecentlyPlayed = async (accessToken: string) => {
 
     return await call(accessToken, '/me/player/recently-played', params) as interfaces.SpotifyRecentlyPlayed;
 }
+
+export const getCurrentlyPlaying = async (accessToken: string) => {
+    return await call(accessToken, '/me/player/currently-playing') as interfaces.SpotifyCurrentlyPlaying;
+};

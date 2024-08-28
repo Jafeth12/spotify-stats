@@ -8,6 +8,7 @@ export default defineConfig({
 			clientId: import.meta.env.SPOTIFY_CLIENT_ID,
 			clientSecret: import.meta.env.SPOTIFY_CLIENT_SECRET,
             authorization: { params: { scope: "user-top-read user-read-recently-played user-read-private" } },
+            // scope: "user-top-read user-read-recently-played user-read-private user-read-currently-playing"
 		}),
 	],
     callbacks: {

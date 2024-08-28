@@ -11,6 +11,7 @@ const session = await getSession(Astro.request);
 
 import "../styles/global.scss";
 import Navbar from '../components/nav/Navbar.astro';
+import Playing from '../components/Playing.tsx';
 ---
 
 <!doctype html>
@@ -29,6 +30,13 @@ import Navbar from '../components/nav/Navbar.astro';
         <div class="min-h-screen text-white bg-gradient-to-t from-zinc-900 to-emerald-800 from-80%">
 		    <slot />
         </div>
+
+        { 
+            session ? 
+                <Playing client:load session={session} />
+            : 
+                <span />
+        }
 	</body>
 </html>
 <style is:global>
