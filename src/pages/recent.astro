@@ -8,12 +8,14 @@ if (!session.user) return Astro.redirect("/login");
 if (session.expires < Date.now()) return Astro.redirect("/login");
 
 import Layout from '../../layouts/Layout.astro';
-import TopItems from '../../components/TopItems.astro';
-
+import ItemGrid from '../../components/ItemGrid.astro';
 ---
 
-<Layout title="Top Artists">
-    <TopItems session={session} type={spotifyInterfaces.SpotifyItemType.artists} timeRange={spotifyInterfaces.SpotifyTimeRange.medium_term} />
+<Layout title="//">
+    <div class="text-center p-10">
+        <h1 class="text-4xl font-bold">Top {type}: <span class="text-gray-300">{session.user.name}</span></h1>
+    </div>
+    <TopItems session={session} type={spotifyInterfaces.SpotifyItemType.tracks} timeRange={spotifyInterfaces.SpotifyTimeRange.medium_term} />
 </Layout>
 
 <script>

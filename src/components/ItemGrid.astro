@@ -1,0 +1,32 @@
+---
+import * as spotifyInterfaces from '../spotify/interfaces.ts';
+import { getTopItems } from '../spotify/api.ts';
+
+interface Props {
+    session: any;
+    type: spotifyInterfaces.SpotifyItemType;
+    timeRange: spotifyInterfaces.SpotifyTimeRange;
+}
+
+const { session, type, timeRange } = Astro.props;
+
+const topItems = await getTopItems(session.accessToken, type, timeRange);
+
+import Track from './cards/Track.astro';
+import Artist from './cards/Artist.astro';
+---
+
+<div class="grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 xl:gap-6 xl:gap-y-12 md:gap-12 gap-y-12 px-20 py-10">
+    {
+        topItems.items.map((item: spotifyInterfaces.SpotifyItem, index: number) => {
+            if (type === spotifyInterfaces.SpotifyItemType.tracks) {
+                return <Track data={item as spotifyInterfaces.SpotifyTrack} rank={index+1} />
+            }
+
+            return <Artist data={item as SpotifyArtist} rank={index+1} />
+        })
+    }
+</div>
+
+<script>
+</script>

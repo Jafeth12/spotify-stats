@@ -12,8 +12,8 @@ import TopItems from '../../components/TopItems.astro';
 
 ---
 
-<Layout title="//">
-    <TopItems session={session} type={spotifyInterfaces.SpotifyItemType.artists} time_range={spotifyInterfaces.SpotifyTimeRange.short_term} />
+<Layout title="Top Artists">
+    <TopItems session={session} type={spotifyInterfaces.SpotifyItemType.artists} timeRange={spotifyInterfaces.SpotifyTimeRange.short_term} />
 </Layout>
 
 <script>

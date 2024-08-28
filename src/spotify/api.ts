@@ -25,11 +25,11 @@ export const getProfile = async (accessToken: string) => {
     return await call(accessToken, '/me') as SpotifyProfile;
 }
 
-export const getTopItems = async (accessToken: string, type: interfaces.SpotifyItemType, time_range: interfaces.SpotifyTimeRange) => {
+export const getTopItems = async (accessToken: string, type: interfaces.SpotifyItemType, timeRange: interfaces.SpotifyTimeRange) => {
     const endpoint = (type == interfaces.SpotifyItemType.artists) ? '/me/top/artists' : '/me/top/tracks';
 
     const params = {
-        time_range: time_range,
+        time_range: timeRange,
         offset: 0,
         limit: 50,
     } as interfaces.SpotifyTopItemParams; 

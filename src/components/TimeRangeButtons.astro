@@ -1,0 +1,37 @@
+---
+import * as spotifyInterfaces from '../spotify/interfaces.ts';
+
+interface Props {
+    type: spotifyInterfaces.SpotifyItemType;
+    timeRange: spotifyInterfaces.SpotifyTimeRange;
+}
+
+const { type, timeRange } = Astro.props;
+
+---
+
+<div class="flex justify-between gap-10 ">
+    <a href={'/' + type + '/4w'} class="btn-confirm transition ease-in">
+        { (timeRange === spotifyInterfaces.SpotifyTimeRange.short_term) ? 
+        <strong>Last 4 weeks</strong>
+        :
+        <p>Last 4 weeks</p>
+        }
+    </a>
+
+    <a href={'/' + type } class="btn-confirm transition ease-in">
+        { (timeRange === spotifyInterfaces.SpotifyTimeRange.medium_term) ? 
+        <strong>Last 6 months</strong>
+        :
+        <p>Last 6 months</p>
+        }
+    </a>
+
+    <a href={'/' + type + '/12m'} class="btn-confirm transition ease-in">
+        { (timeRange === spotifyInterfaces.SpotifyTimeRange.long_term) ? 
+        <strong>Last 12 months</strong>
+        :
+        <p>Last 12 months</p>
+        }
+    </a>
+</div>
