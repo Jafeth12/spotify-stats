@@ -7,14 +7,13 @@ const buildHeaders = (accessToken: string) => {
     return { 'Authorization': 'Bearer ' + accessToken };
 }
 
-const call = async (endpoint: string, accessToken: string) => {
-    const url = urlBase + endpoint;
+const call = async (accessToken: string, endpoint: string, params = {}, body = {}) => {
+    const url = new URL(urlBase + endpoint);
+    const newParams = new URLSearchParams(params);
 
-    console.log('calling: ' + url);
+    console.log('calling: ' + url + '?' + newParams.toString());
 
-    // TODO be able to change time_range (GET param)
-
-    const data = await fetch(urlBase + endpoint, { headers: buildHeaders(accessToken) })
+    const data = await fetch(url + '?' + newParams.toString(), { headers: buildHeaders(accessToken) })
         .then((response) => response.json());
 
     return data;
@@ -23,11 +22,17 @@ const call = async (endpoint: string, accessToken: string) => {
 //----------------
 
 export const getProfile = async (accessToken: string) => {
-    return await call('/me', accessToken) as SpotifyProfile;
+    return await call(accessToken, '/me') as SpotifyProfile;
 }
 
-export const getTopItems = async (accessToken: string, type: interfaces.SpotifyItemType) => {
-    let endpoint = (type == interfaces.SpotifyItemType.artists) ? '/me/top/artists' : '/me/top/tracks';
+export const getTopItems = async (accessToken: string, type: interfaces.SpotifyItemType, time_range: interfaces.SpotifyTimeRange) => {
+    const endpoint = (type == interfaces.SpotifyItemType.artists) ? '/me/top/artists' : '/me/top/tracks';
 
-    return await call(endpoint, accessToken) as interfaces.SpotifyTopItems;
+    const params = {
+        time_range: time_range,
+        offset: 0,
+        limit: 50,
+    } as interfaces.SpotifyTopItemParams; 
+
+    return await call(accessToken, endpoint, params) as interfaces.SpotifyTopItems;
 }

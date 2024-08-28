@@ -1,0 +1,63 @@
+---
+import * as spotifyInterfaces from '../spotify/interfaces.ts';
+import { getTopItems } from '../spotify/api.ts';
+
+interface Props {
+    session: any;
+    type: spotifyInterfaces.SpotifyItemType;
+    time_range: spotifyInterfaces.SpotifyTimeRange;
+}
+
+const { session, type, time_range } = Astro.props;
+
+const topItems = await getTopItems(session.accessToken, type, time_range);
+
+import Layout from '../layouts/Layout.astro';
+import Track from './cards/Track.astro';
+import Artist from './cards/Artist.astro';
+---
+
+<div class="text-center p-10">
+    <h1 class="text-4xl font-bold">Top {type}: <span class="text-gray-300">{session.user.name}</span></h1>
+</div>
+<div class="w-full flex justify-center px-10">
+    <div class="flex justify-between gap-10 ">
+        <a href={'/' + type + '/4w'} class="btn-confirm transition ease-in">
+            { (time_range === spotifyInterfaces.SpotifyTimeRange.short_term) ? 
+                <strong>Last 4 weeks</strong>
+                :
+                <p>Last 4 weeks</p>
+            }
+        </a>
+
+        <a href={'/' + type } class="btn-confirm transition ease-in">
+            { (time_range === spotifyInterfaces.SpotifyTimeRange.medium_term) ? 
+                <strong>Last 6 months</strong>
+                :
+                <p>Last 6 months</p>
+            }
+        </a>
+
+        <a href={'/' + type + '/12m'} class="btn-confirm transition ease-in">
+            { (time_range === spotifyInterfaces.SpotifyTimeRange.long_term) ? 
+                <strong>Last 12 months</strong>
+                :
+                <p>Last 12 months</p>
+            }
+        </a>
+    </div>
+</div>
+<div class="grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 xl:gap-6 xl:gap-y-12 md:gap-12 gap-y-12 px-20 py-10">
+    {
+        topItems.items.map((item: spotifyInterfaces.SpotifyItem, index: number) => {
+            if (type === spotifyInterfaces.SpotifyItemType.tracks) {
+                return <Track data={item as spotifyInterfaces.SpotifyTrack} rank={index+1} />
+            }
+
+            return <Artist data={item as SpotifyArtist} rank={index+1} />
+        })
+    }
+</div>
+
+<script>
+</script>

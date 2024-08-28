@@ -3,6 +3,7 @@ import { getSession } from 'auth-astro/server';
 
 let session = await getSession(Astro.request);
 if (!session) return Astro.redirect("/login");
+if (session.expires < Date.now()) return Astro.redirect("/login");
 
 import Layout from '../layouts/Layout.astro';
 import Profile from '../components/profile/Profile.astro';

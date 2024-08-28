@@ -1,5 +1,17 @@
 import type { SpotifyImage } from '@auth/core/providers/spotify';
 
+export enum SpotifyTimeRange {
+    long_term = 'long_term',
+    medium_term = 'medium_term',
+    short_term = 'short_term'
+}
+
+export interface SpotifyTopItemParams {
+    time_range: SpotifyTimeRange;
+    limit: number;
+    offset: number;
+};
+
 export interface SpotifySimplifiedArtist {
     id: string;
     name: string;
@@ -81,8 +93,8 @@ export interface SpotifyTrack {
 };
 
 export enum SpotifyItemType {
-    artists,
-    tracks
+    artists = "artists",
+    tracks = "tracks"
 };
 
 export type SpotifyItem = SpotifyArtist | SpotifyTrack;

@@ -1,0 +1,20 @@
+---
+import { getSession } from 'auth-astro/server';
+import * as spotifyInterfaces from '../../spotify/interfaces.ts';
+
+let session = await getSession(Astro.request) as any;
+if (!session) return Astro.redirect("/login");
+if (!session.user) return Astro.redirect("/login");
+if (session.expires < Date.now()) return Astro.redirect("/login");
+
+import Layout from '../../layouts/Layout.astro';
+import TopItems from '../../components/TopItems.astro';
+
+---
+
+<Layout title="//">
+    <TopItems session={session} type={spotifyInterfaces.SpotifyItemType.artists} time_range={spotifyInterfaces.SpotifyTimeRange.medium_term} />
+</Layout>
+
+<script>
+</script>
