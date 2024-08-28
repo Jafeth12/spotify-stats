@@ -36,3 +36,12 @@ export const getTopItems = async (accessToken: string, type: interfaces.SpotifyI
 
     return await call(accessToken, endpoint, params) as interfaces.SpotifyTopItems;
 }
+
+export const getRecentlyPlayed = async (accessToken: string) => {
+    const params = {
+        limit: 50,
+        before: Date.now(),
+    } as interfaces.SpotifyRecentlyPlayedParams; 
+
+    return await call(accessToken, '/me/player/recently-played', params) as interfaces.SpotifyRecentlyPlayed;
+}

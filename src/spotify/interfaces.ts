@@ -6,6 +6,12 @@ export enum SpotifyTimeRange {
     short_term = 'short_term'
 }
 
+export interface SpotifyRecentlyPlayedParams {
+    limit: number;
+    after: number;
+    before: number;
+};
+
 export interface SpotifyTopItemParams {
     time_range: SpotifyTimeRange;
     limit: number;
@@ -97,6 +103,11 @@ export enum SpotifyItemType {
     tracks = "tracks"
 };
 
+export interface SpotifyPlayHistoryObject {
+    track: SpotifyTrack;
+    played_at: string;
+};
+
 export type SpotifyItem = SpotifyArtist | SpotifyTrack;
 
 export interface SpotifyTopItems {
@@ -107,4 +118,16 @@ export interface SpotifyTopItems {
     previous: string;
     total: number;
     items: SpotifyItem[];
+};
+
+export interface SpotifyRecentlyPlayed {
+    href: string;
+    limit: number;
+    next: string;
+    total: number;
+    items: SpotifyPlayHistoryObject[];
+    cursors: {
+        after: string;
+        before: string;
+    };
 };
