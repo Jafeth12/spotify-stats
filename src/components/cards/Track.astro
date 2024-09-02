@@ -33,10 +33,18 @@ const getDateString = (playedAt: string) => {
 
         return `${hours} hours ago ` + hhmm;
     } else {
-        if (days === 1) return `a day ago ` + hhmm;
+        if (hours < 48) return `${hours} hours ago ` + hhmm;
 
         return `${days} days ago ` + hhmm;
     }
+}
+
+const getRank = () => {
+    if (playedAt) {
+        return '';
+    }
+
+    return `${rank}. `;
 }
 
 import { Image } from 'astro:assets';
@@ -61,7 +69,7 @@ import { Image } from 'astro:assets';
         }
     </div>
         <a href={data.external_urls.spotify} target="_blank" >  
-            <p class="track-title text-xl text-center transition ease-in hover:text-gray-400" title={data.name}> <span class="text-xl text-gray-500">{rank}.</span> {data.name}</p>
+            <p class="track-title text-xl text-center transition ease-in hover:text-gray-400" title={data.name}> <span class="text-xl text-gray-500">{getRank()}</span> {data.name}</p>
         </a>
 
         <div class="text-md text-gray-300 mt-2 flex justify-around">
