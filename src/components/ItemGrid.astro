@@ -4,49 +4,42 @@ import { getTopItems, getRecentlyPlayed } from '../spotify/api.ts';
 
 interface Props {
     session: any;
-    recentlyPlayed: boolean;
+    recentlyPlayed: boolean | null;
     type: spotifyInterfaces.SpotifyItemType;
     timeRange: spotifyInterfaces.SpotifyTimeRange;
 }
 
 const { session, recentlyPlayed, type, timeRange } = Astro.props;
 
-let grid;
+let gridItems;
+let gridRecentlyPlayed;
 
 if (recentlyPlayed) {
-    grid = await getRecentlyPlayed(session.accessToken);
+    gridRecentlyPlayed = await getRecentlyPlayed(session.accessToken);
 } else {
-    grid = await getTopItems(session.accessToken, type, timeRange);
+    gridItems = await getTopItems(session.accessToken, type, timeRange);
 }
 
 import Track from './cards/Track.astro';
 import Artist from './cards/Artist.astro';
 ---
-{
-    recentlyPlayed ?
-    <div class="grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 xl:gap-6 xl:gap-y-12 md:gap-12 gap-y-12 xl:px-56 py-10 md:px-20 sm:px-32">
-        {
-            grid.items.map((item: spotifyInterfaces.SpotifyItem, index: number) => {
-                return <Track data={item.track as spotifyInterfaces.SpotifyTrack} playedAt={item.played_at}/>
+
+<div class="grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 xl:gap-6 xl:gap-y-12 md:gap-12 gap-y-12 xl:px-56 py-10 md:px-20 sm:px-32">
+    {
+        recentlyPlayed ?
+            (gridRecentlyPlayed) && gridRecentlyPlayed.items.map((item: spotifyInterfaces.SpotifyPlayHistoryObject, index: number) => {
+                return <Track data={item.track as spotifyInterfaces.SpotifyTrack} playedAt={item.played_at} rank={null}/>
             })
-        }
-    </div>
-    :
-    <div class="grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 xl:gap-6 xl:gap-y-12 md:gap-12 gap-y-12 xl:px-56 py-10 md:px-20 sm:px-32">
-        {
-            grid.items.map((item: spotifyInterfaces.SpotifyItem, index: number) => {
+        :
+            (gridItems) && gridItems.items.map((item: spotifyInterfaces.SpotifyItem, index: number) => {
                 if (type === spotifyInterfaces.SpotifyItemType.tracks) {
-                    return <Track data={item as spotifyInterfaces.SpotifyTrack} rank={index+1} />
+                    return <Track data={item as spotifyInterfaces.SpotifyTrack} rank={index+1} playedAt={null}/>
                 }
 
-                return <Artist data={item as SpotifyArtist} rank={index+1} />
+                return <Artist data={item as spotifyInterfaces.SpotifyArtist} rank={index+1} />
             })
-        }
-    </div>
-
-
-}
-
+    }
+</div>
 
 <script>
 </script>

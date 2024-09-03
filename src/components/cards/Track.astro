@@ -3,8 +3,8 @@ import type { SpotifyTrack, SpotifySimplifiedArtist } from '../../spotify/interf
 
 interface Props {
     data: SpotifyTrack;
-    rank: number;
-    playedAt: string;
+    rank: number | null;
+    playedAt: string | null;
 }
 
 const { data, rank, playedAt } = Astro.props;
